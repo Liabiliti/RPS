@@ -1,43 +1,65 @@
-let x = new Array("rock", "paper", "scissors");
+let choices = new Array("rock", "paper", "scissors");
 
 function getComputerMove()
 {
-    return x[Math.floor(Math.random() * x.length)];
+    return choices[Math.floor(Math.random() * choices.length)];
 }
+
+const buttons = document.querySelectorAll('button');
+const result = document.querySelector('.Result');
+let gameCounter = 0;
+let playerWins = 0;
+let computerWins = 0;
+
 
 function playRound(playerChoice, computerChoice)
 {
+    if(gameCounter === 5)
+    {
+        
+    }
     playerChoice = playerChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
     if(playerChoice === computerChoice)
     {
         computerChoice = computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1);
-        return "You Draw! You both chose " + computerChoice;
+        result.textContent = "You Draw! You both chose " + computerChoice;
+        gameCounter--;
     }
     else if(playerChoice === "rock" && computerChoice === "paper")
     {
-        return "You Lose! Paper beats Rock"; 
+        result.textContent = "You Lose! Paper beats Rock"; 
+        computerWins++;
     }
     else if(playerChoice === "paper" && computerChoice === "scissors")
     {
-        return "You Lose! Scissors beats Paper"; 
+        result.textContent = "You Lose! Scissors beats Paper"; 
+        computerWins++;
     }
     else if(playerChoice === "scissors" && computerChoice === "rock")
     {
-        return "You Lose! Rock beats Scissors"; 
+        result.textContent = "You Lose! Rock beats Scissors";
+        computerWins++; 
     }
     else{
         playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
         computerChoice = computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1);
-        return "You Won! " + playerChoice + " beats " + computerChoice;
+        result.textContent = "You Won! " + playerChoice + " beats " + computerChoice;
+        playerWins++;
     }
+    gameCounter++;
 }
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id, getComputerMove());
+    });
+});
 
 function Game()
 {
     for(let i = 0; i < 5; i++)
     {
-        let playerChoice = prompt("Please type in either Rock, Paper or Scissors : ");
         while(1)
         {
             playerChoice = playerChoice.toLowerCase();
