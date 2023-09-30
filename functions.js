@@ -7,24 +7,22 @@ function getComputerMove()
 
 const buttons = document.querySelectorAll('button');
 const result = document.querySelector('.Result');
-let gameCounter = 0;
+let counter = document.querySelector(".Counter");
+let games = document.querySelector(".Games");
 let playerWins = 0;
 let computerWins = 0;
+const gamesToPlay = 5;
 
 
 function playRound(playerChoice, computerChoice)
 {
-    if(gameCounter === 5)
-    {
-        
-    }
+
     playerChoice = playerChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
     if(playerChoice === computerChoice)
     {
         computerChoice = computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1);
         result.textContent = "You Draw! You both chose " + computerChoice;
-        gameCounter--;
     }
     else if(playerChoice === "rock" && computerChoice === "paper")
     {
@@ -47,7 +45,20 @@ function playRound(playerChoice, computerChoice)
         result.textContent = "You Won! " + playerChoice + " beats " + computerChoice;
         playerWins++;
     }
-    gameCounter++;
+    counter.textContent = playerWins + " | " + computerWins;
+    if(playerWins === gamesToPlay || computerWins === gamesToPlay)
+    {
+        if(playerWins > computerWins)
+        {
+            counter.textContent = playerWins + " | " + computerWins + "\r\n Player Won!\r\n To play again press any button";
+        }
+        else{
+            counter.textContent = playerWins + " | " + computerWins + "\r\n Computer Won!\r\n To play again press any button";
+        }
+        playerWins = 0;
+        computerWins = 0;
+        gameCounter = 0;
+    }
 }
 
 buttons.forEach((button) => {
